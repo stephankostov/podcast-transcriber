@@ -1,0 +1,2 @@
+[nbdev]
+transcriber = transcriber._modidx:d
