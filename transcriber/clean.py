@@ -4,6 +4,7 @@
 __all__ = ['get_indexed_sentences', 'remove_punctuation', 'lower_case', 'remove_numbers', 'remove_stopwords', 'clean']
 
 # %% ../nbs/clean.ipynb 2
+import json
 import string
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize

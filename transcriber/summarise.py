@@ -8,6 +8,7 @@ __all__ = ['load_llm_pipeline', 'get_base_prompt', 'get_intro_prompt', 'get_stan
 
 # %% ../nbs/summarise.ipynb 21
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
+from .group import group_paragraphs_text
 import torch
 
 # %% ../nbs/summarise.ipynb 24
