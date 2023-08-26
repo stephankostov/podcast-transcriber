@@ -9,7 +9,6 @@ transcriber/download.py
 transcriber/frontend.py
 transcriber/group.py
 transcriber/summarise.py
-transcriber/test.py
 transcriber/transcribe.py
 transcriber.egg-info/PKG-INFO
 transcriber.egg-info/SOURCES.txt
