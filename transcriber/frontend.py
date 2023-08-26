@@ -9,16 +9,23 @@ __all__ = ['format_timestamp', 'create_overview_summary_div', 'create_overview_t
 from pathlib import Path
 from bs4 import BeautifulSoup
 from datetime import timedelta
-import sys
+import os
 
 # %% ../nbs/frontend.ipynb 3
-with open(sys.path[0] + '/data/assets/template.html', 'r') as f:
+# __file__ var doesn't exist for ipynb in which case the cwd can be used
+try:
+    module_path = os.path.dirname(__file__)
+except:
+    module_path = os.path.abspath('')
+
+# %% ../nbs/frontend.ipynb 4
+with open(module_path + '/../data/assets/template.html', 'r') as f:
     doc = BeautifulSoup(f, 'html.parser')
 
-# %% ../nbs/frontend.ipynb 8
+# %% ../nbs/frontend.ipynb 9
 def format_timestamp(seconds): return str(timedelta(seconds=int(seconds)))
 
-# %% ../nbs/frontend.ipynb 9
+# %% ../nbs/frontend.ipynb 10
 def create_overview_summary_div(whole_summary):
     summary_div = doc.new_tag('div', attrs={'class': 'transcript-summary-whole'})
     summary_p = doc.new_tag('p', attrs={'class': 'transcript-summary-whole-paragraph'})
@@ -26,7 +33,7 @@ def create_overview_summary_div(whole_summary):
     summary_div.append(summary_p)
     return summary_div
 
-# %% ../nbs/frontend.ipynb 10
+# %% ../nbs/frontend.ipynb 11
 def create_overview_toc_div(topics):
     toc_div = doc.new_tag('div', attrs={'class': 'transcript-toc'})
     toc_list = doc.new_tag('ol', attrs={'class': 'toc-list'})
@@ -42,14 +49,14 @@ def create_overview_toc_div(topics):
     return toc_div
 
 
-# %% ../nbs/frontend.ipynb 11
+# %% ../nbs/frontend.ipynb 12
 def create_overview_div(transcript):
     overview_div = doc.new_tag('div', attrs={'class': 'transcript-overview'})
     overview_div.append(create_overview_summary_div(transcript['summary']))
     overview_div.append(create_overview_toc_div(transcript['topics']))
     return overview_div
 
-# %% ../nbs/frontend.ipynb 12
+# %% ../nbs/frontend.ipynb 13
 def create_topic_summary_div(summary):
     summary_div = doc.new_tag('div')
     summary_div['class'] = 'transcript-summary'
@@ -59,7 +66,7 @@ def create_topic_summary_div(summary):
     summary_div.append(summary_p)
     return summary_div
 
-# %% ../nbs/frontend.ipynb 13
+# %% ../nbs/frontend.ipynb 14
 def create_info_div(object, group_type, attrs, summary=False):
     info_div = doc.new_tag('div')
     info_div['class'] = 'transcript-info ' + group_type
@@ -81,7 +88,7 @@ def create_info_div(object, group_type, attrs, summary=False):
     info_div.append(info_button)
     return info_div
 
-# %% ../nbs/frontend.ipynb 14
+# %% ../nbs/frontend.ipynb 15
 def create_group_div(group, fields=['label', 'start'], summary=False):
     group_type = group['type']
     group_div = doc.new_tag('div')
@@ -91,7 +98,7 @@ def create_group_div(group, fields=['label', 'start'], summary=False):
     if summary: group_div.append(create_topic_summary_div(group['summary']))
     return group_div
 
-# %% ../nbs/frontend.ipynb 15
+# %% ../nbs/frontend.ipynb 16
 def create_paragraph_div(paragraph):
     paragraph_field = doc.new_tag('p')
     paragraph_field['id'] = str(paragraph['label'])
@@ -105,7 +112,7 @@ def create_paragraph_div(paragraph):
         paragraph_field.append(span)
     return paragraph_field
 
-# %% ../nbs/frontend.ipynb 16
+# %% ../nbs/frontend.ipynb 17
 def create_transcript_div(transcript):
     transcript_div = doc.new_tag('div')
     transcript_div['class'] = 'transcript'
@@ -124,7 +131,7 @@ def create_transcript_div(transcript):
         transcript_div.append(topic_div)
     return transcript_div
 
-# %% ../nbs/frontend.ipynb 17
+# %% ../nbs/frontend.ipynb 18
 def create_html(transcript, episode_file):
 
     doc_transcript_div = doc.find_all('div', {'class': 'transcript-wrapper'})[0]
