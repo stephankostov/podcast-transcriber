@@ -11,17 +11,6 @@ from bs4 import BeautifulSoup
 from datetime import timedelta
 import os
 
-# %% ../nbs/frontend.ipynb 3
-# __file__ var doesn't exist for ipynb in which case the cwd can be used
-try:
-    module_path = os.path.dirname(__file__)
-except:
-    module_path = os.path.abspath('')
-
-# %% ../nbs/frontend.ipynb 4
-with open(module_path + '/../data/assets/template.html', 'r') as f:
-    doc = BeautifulSoup(f, 'html.parser')
-
 # %% ../nbs/frontend.ipynb 9
 def format_timestamp(seconds): return str(timedelta(seconds=int(seconds)))
 
@@ -132,13 +121,14 @@ def create_transcript_div(transcript):
     return transcript_div
 
 # %% ../nbs/frontend.ipynb 18
-def create_html(transcript, episode_file):
+def create_html(transcript, episode_file, template_path='./assets/html/template.html'):
+
+    with open(template_path, 'r') as f: doc = BeautifulSoup(f, 'html.parser')
 
     doc_transcript_div = doc.find_all('div', {'class': 'transcript-wrapper'})[0]
     doc_transcript_div.append(create_overview_div(transcript))
     doc_transcript_div.append(create_transcript_div(transcript['topics']))
 
-    with open(Path(episode_file).parent/'output-doc.html', 'w') as f:
-        f.write(str(doc))
+    with open(Path(episode_file).parent/'output-doc.html', 'w') as f: f.write(str(doc))
     
     return doc

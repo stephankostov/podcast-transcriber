@@ -12,14 +12,7 @@ import string as stringlib
 from pydub import AudioSegment
 import os
 
-# %% ../nbs/download.ipynb 2
-# __file__ var doesn't exist for ipynb in which case the cwd can be used
-try:
-    module_path = os.path.dirname(__file__)
-except:
-    module_path = os.path.abspath('')
-
-# %% ../nbs/download.ipynb 4
+# %% ../nbs/download.ipynb 3
 def unique_dir(dir):
     count = 1
     file, extension = dir.with_suffix(""), dir.suffix
@@ -28,17 +21,15 @@ def unique_dir(dir):
         count += 1
     return dir
 
-def get_episode_path(episode_name, source):
-    if source == "podcast": folder = "podcasts"
-    elif source == "youtube": folder = "youtube"
-    episode_dir = unique_dir(Path(f"{module_path}/../data/{folder}/{episode_name}").with_suffix(''))
+def get_episode_path(episode_name, episode_type, data_path):
+    episode_dir = unique_dir(Path(f"{data_path}/{episode_type}/{episode_name}").with_suffix(''))
     return episode_dir/'tmp'/('audio_og.mp3')
 
 def initialise_dirs(episode_path):
     episode_dir = episode_path.parent
     episode_dir.mkdir(parents=True, exist_ok=True)
 
-# %% ../nbs/download.ipynb 5
+# %% ../nbs/download.ipynb 4
 def remove_spaces(string, max_words=5, separator="-"): return separator.join(string.split(" ")[:max_words])
 def remove_punctuation(string): 
     return string.translate(
@@ -51,7 +42,7 @@ def get_episode_name(url):
     channel = remove_spaces(remove_punctuation(info['uploader']), separator="")
     return f"{channel}_{name}"
 
-# %% ../nbs/download.ipynb 6
+# %% ../nbs/download.ipynb 5
 def download_youtube(url, episode_path, episode_name=None):
 
     if episode_name is None: episode_name = get_episode_name(url)
@@ -76,7 +67,7 @@ def download_youtube(url, episode_path, episode_name=None):
 
     return episode_path
 
-# %% ../nbs/download.ipynb 7
+# %% ../nbs/download.ipynb 6
 # here we format the audio, and export it both in wav to be used by the transcriber, and a much more copmressed mp3 for the output.
 def format_audio(audio_path, spacer=False):
     audio = AudioSegment.from_file(audio_path)
@@ -91,9 +82,9 @@ def format_audio(audio_path, spacer=False):
     audio.export(audio_mp3, format='mp3')
     return audio_wav, audio_mp3
 
-# %% ../nbs/download.ipynb 8
-def download_episode(url, episode_name, source):
-    episode_path = get_episode_path(episode_name, source)
+# %% ../nbs/download.ipynb 7
+def download_episode(url, episode_name, source, data_path):
+    episode_path = get_episode_path(episode_name, source, data_path)
     initialise_dirs(episode_path)
     if source == "podcast":
         episode_path = wget.download(url, out=str(episode_path))
@@ -101,5 +92,5 @@ def download_episode(url, episode_name, source):
         episode_path = download_youtube(url, episode_path)
     else: 
         raise("Unspecified Source")
-    downloaded_path = format_audio(str(episode_path))
-    return downloaded_path
+    download_paths = format_audio(str(episode_path))
+    return download_paths
