@@ -25,7 +25,7 @@ def main():
 
     p = argparse.ArgumentParser(description=__doc__,
                                 formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    p.add_argument('--url', type=str, required=True, help='url of episode mp3 / youtube video')
+    p.add_argument('--url', type=str, required=True, help='url of episode')
     p.add_argument('--name', type=str, required=True, help='episode name')
     p.add_argument('--type', type=str, default='podcast', choices=['podcast','youtube'], help='source type')
     p.add_argument('--n_speakers', type=int, required=False, help='number of speakers in episode (leave blank if at all unsure)')
