@@ -4,7 +4,6 @@ transcriber/__init__.py
 transcriber/__main__.py
 transcriber/_modidx.py
 transcriber/clean.py
-transcriber/core.py
 transcriber/download.py
 transcriber/frontend.py
 transcriber/group.py

@@ -1,3 +1,6 @@
+*.egg-info/
+transcriber/__pycache__/
+
 data/podcast/*
 data/youtube
 !data/podcast/lex_ai_stephen_wolfram_1
