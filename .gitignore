@@ -1,5 +1,5 @@
-*.egg-info/
-transcriber/__pycache__/
+*.egg-info
+*__pycache__
 
 data/podcast/*
 data/youtube
