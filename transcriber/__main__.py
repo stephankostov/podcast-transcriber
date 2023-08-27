@@ -17,7 +17,7 @@ logging.basicConfig(
     datefmt='%H:%M:%S')
 
 def saveToJSON(o, filename, episode_file, tmp=False):
-    save_dir = Path(episode_file).parents[0] if not tmp else Path(episode_file).parents[1]
+    save_dir = Path(episode_file).parents[1] if not tmp else Path(episode_file).parents[0]
     with open(save_dir/filename, 'w') as f:
         json.dump(o, f, ensure_ascii=False, indent=2)
 
@@ -42,7 +42,7 @@ def main():
 
     logging.info("STAGE: Grouping transcript")
     transcript_split = group(transcript['words'], args.n_topics)
-    saveToJSON(transcript_split, 'transcript-split.json', audio_wav, True)
+    saveToJSON(transcript_split, 'transcript-grouped.json', audio_wav, True)
 
     logging.info("STAGE: Summarising transcript groups")
     transcript_full = summarise(transcript_split)
