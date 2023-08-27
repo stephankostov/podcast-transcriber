@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['format_timestamp', 'create_overview_summary_div', 'create_overview_toc_div', 'create_overview_div',
            'create_topic_summary_div', 'create_info_div', 'create_group_div', 'create_paragraph_div',
-           'create_transcript_div', 'create_html']
+           'create_transcript_div', 'writeOutput', 'create_html']
 
 # %% ../nbs/frontend.ipynb 1
 from pathlib import Path
@@ -16,6 +16,7 @@ def format_timestamp(seconds): return str(timedelta(seconds=int(seconds)))
 
 # %% ../nbs/frontend.ipynb 10
 def create_overview_summary_div(whole_summary):
+    doc = BeautifulSoup('', 'html.parser')
     summary_div = doc.new_tag('div', attrs={'class': 'transcript-summary-whole'})
     summary_p = doc.new_tag('p', attrs={'class': 'transcript-summary-whole-paragraph'})
     summary_p.string = whole_summary
@@ -24,6 +25,7 @@ def create_overview_summary_div(whole_summary):
 
 # %% ../nbs/frontend.ipynb 11
 def create_overview_toc_div(topics):
+    doc = BeautifulSoup('', 'html.parser')
     toc_div = doc.new_tag('div', attrs={'class': 'transcript-toc'})
     toc_list = doc.new_tag('ol', attrs={'class': 'toc-list'})
     for topic in topics:
@@ -40,6 +42,7 @@ def create_overview_toc_div(topics):
 
 # %% ../nbs/frontend.ipynb 12
 def create_overview_div(transcript):
+    doc = BeautifulSoup('', 'html.parser')
     overview_div = doc.new_tag('div', attrs={'class': 'transcript-overview'})
     overview_div.append(create_overview_summary_div(transcript['summary']))
     overview_div.append(create_overview_toc_div(transcript['topics']))
@@ -47,6 +50,7 @@ def create_overview_div(transcript):
 
 # %% ../nbs/frontend.ipynb 13
 def create_topic_summary_div(summary):
+    doc = BeautifulSoup('', 'html.parser')
     summary_div = doc.new_tag('div')
     summary_div['class'] = 'transcript-summary'
     summary_p = doc.new_tag("p")
@@ -57,6 +61,7 @@ def create_topic_summary_div(summary):
 
 # %% ../nbs/frontend.ipynb 14
 def create_info_div(object, group_type, attrs, summary=False):
+    doc = BeautifulSoup('', 'html.parser')
     info_div = doc.new_tag('div')
     info_div['class'] = 'transcript-info ' + group_type
     info_button = doc.new_tag('button')
@@ -79,6 +84,7 @@ def create_info_div(object, group_type, attrs, summary=False):
 
 # %% ../nbs/frontend.ipynb 15
 def create_group_div(group, fields=['label', 'start'], summary=False):
+    doc = BeautifulSoup('', 'html.parser')
     group_type = group['type']
     group_div = doc.new_tag('div')
     group_div['class'] = 'transcript-' + group_type
@@ -89,6 +95,7 @@ def create_group_div(group, fields=['label', 'start'], summary=False):
 
 # %% ../nbs/frontend.ipynb 16
 def create_paragraph_div(paragraph):
+    doc = BeautifulSoup('', 'html.parser')
     paragraph_field = doc.new_tag('p')
     paragraph_field['id'] = str(paragraph['label'])
     paragraph_field['class'] = 'transcript-paragraph'
@@ -103,6 +110,7 @@ def create_paragraph_div(paragraph):
 
 # %% ../nbs/frontend.ipynb 17
 def create_transcript_div(transcript):
+    doc = BeautifulSoup('', 'html.parser')
     transcript_div = doc.new_tag('div')
     transcript_div['class'] = 'transcript'
     for topic in transcript:
@@ -119,6 +127,14 @@ def create_transcript_div(transcript):
             topic_div.append(speech_div)
         transcript_div.append(topic_div)
     return transcript_div
+
+# %% ../nbs/frontend.ipynb 18
+def writeOutput(doc, episode_file, asset_path):
+    output_path = Path(episode_file).parent/'output'
+    if output_path.exists(): shutil.rmtree(output_path)
+    shutil.copytree(asset_path, output_path, ignore=shutil.ignore_patterns("template.html"))
+    with open(output_path/'output.html', 'w') as f: f.write(str(doc.prettify()))
+    return output_path/'output.html'
 
 # %% ../nbs/frontend.ipynb 19
 def create_html(transcript, episode_file, asset_path='./assets/html'):
