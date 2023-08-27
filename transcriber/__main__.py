@@ -17,7 +17,7 @@ logging.basicConfig(
     datefmt='%H:%M:%S')
 
 def saveToJSON(o, filename, episode_file, tmp=False):
-    save_dir = Path(episode_file).parents[1] if not tmp else Path(episode_file).parents[0]
+    save_dir = Path(episode_file).parents[0] if tmp else Path(episode_file).parents[1]
     with open(save_dir/filename, 'w') as f:
         json.dump(o, f, ensure_ascii=False, indent=2)
 
