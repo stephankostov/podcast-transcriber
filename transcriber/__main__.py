@@ -9,7 +9,7 @@ from pathlib import Path
 import logging
 import argparse
 import shutil
-import os
+import torch
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -33,6 +33,9 @@ def main():
     p.add_argument('--clean_tmp', type=bool, required=False, help='remove tmp output dir')
     p.add_argument('--path', type=str, default=str(Path(__file__).parents[1]/"data"), help='specify output filepath')
     args = p.parse_args()
+
+    if not torch.cuda.is_available():
+        logging.warn("Note CUDA version of pytorch was not detected. Non-CUDA use of this app has not been tested") 
     
     logging.info("STAGE: Downloading & formatting audio")
     audio_wav, audio_mp3 = download_episode(args.url, args.name, args.type, args.path)
@@ -45,6 +48,7 @@ def main():
     saveToJSON(transcript_split, 'transcript-grouped.json', audio_wav, True)
 
     logging.info("STAGE: Summarising transcript groups")
+    if torch.cuda.is_available(): torch.cuda.empty_cache()
     transcript_full = summarise(transcript_split)
     saveToJSON(transcript_full, 'transcript.json', audio_wav, False)
 
