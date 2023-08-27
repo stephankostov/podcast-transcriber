@@ -9,7 +9,7 @@ __all__ = ['format_timestamp', 'create_overview_summary_div', 'create_overview_t
 from pathlib import Path
 from bs4 import BeautifulSoup
 from datetime import timedelta
-import os
+import shutil
 
 # %% ../nbs/frontend.ipynb 9
 def format_timestamp(seconds): return str(timedelta(seconds=int(seconds)))
@@ -120,15 +120,15 @@ def create_transcript_div(transcript):
         transcript_div.append(topic_div)
     return transcript_div
 
-# %% ../nbs/frontend.ipynb 18
-def create_html(transcript, episode_file, template_path='./assets/html/template.html'):
+# %% ../nbs/frontend.ipynb 19
+def create_html(transcript, episode_file, asset_path='./assets/html'):
 
-    with open(template_path, 'r') as f: doc = BeautifulSoup(f, 'html.parser')
+    with open(asset_path+'/template.html', 'r') as f: doc = BeautifulSoup(f, 'html.parser')
 
     doc_transcript_div = doc.find_all('div', {'class': 'transcript-wrapper'})[0]
     doc_transcript_div.append(create_overview_div(transcript))
     doc_transcript_div.append(create_transcript_div(transcript['topics']))
 
-    with open(Path(episode_file).parent/'output-doc.html', 'w') as f: f.write(str(doc))
+    output_path = writeOutput(doc, episode_file, asset_path)
     
     return doc

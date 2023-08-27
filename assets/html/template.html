@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8">
     <title>Transcript</title>
-    <link rel="stylesheet" href="../../assets/style.css">
+    <link rel="stylesheet" href="./style.css">
     <script src="https://kit.fontawesome.com/533a6bff3d.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <div class="audio-player">
       <audio id="audio">
-          <source src="audio.mp3" type="audio/mpeg">
+          <source src="../audio.mp3" type="audio/mpeg">
       </audio>
       <progress class="player-progress" value="0"></progress>
       <span class="player-currenttime player-time">00:00:00</span>
@@ -39,7 +39,7 @@
     </div>
     <div class="transcript-wrapper">
     </div>
-    <script src="../../assets/js/audio.js"></script>
+    <script src="./js/audio.js"></script>
     <script>
         var audio = document.querySelector('audio')
         var setAudioTime = function (time) {
