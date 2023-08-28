@@ -1,1 +1,2 @@
-*.html linguist-detectable=false
+data/* linguist-detectable=false
+docs/* linguist-detectable=false
