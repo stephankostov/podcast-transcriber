@@ -2,9 +2,9 @@
 
 # %% auto 0
 __all__ = ['load_llm_pipeline', 'get_base_prompt', 'get_intro_prompt', 'get_standard_prompt', 'format_speech_text',
-           'parse_summary', 'get_topic_summary_prompt', 'summarise_topics', 'get_whole_summary_prompt',
-           'summarise_transcript', 'summarise', 'get_num_tokens', 'chunk_text', 'get_chunk_summary_prompt',
-           'get_chain_title_prompt', 'get_topic_title_chain', 'title_topics']
+           'format_summary', 'parse_summary', 'get_topic_summary_prompt', 'summarise_topics',
+           'get_whole_summary_prompt', 'summarise_transcript', 'summarise', 'get_num_tokens', 'chunk_text',
+           'get_chunk_summary_prompt', 'get_chain_title_prompt', 'get_topic_title_chain', 'title_topics']
 
 # %% ../nbs/summarise.ipynb 21
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
@@ -50,7 +50,7 @@ example concise title
 ###SECTION SUMMARY###
 example concise summary paragraph
 
-Now try:
+Now give real titles and summaries for the below:
 
 ###SECTION###
 {topic_text}
@@ -68,12 +68,19 @@ def get_standard_prompt(topic_text):
 def format_speech_text(topic): return '\n'.join([speech['label'] + ": " + speech['text'] for speech in topic['groups']])
 
 # %% ../nbs/summarise.ipynb 31
+def format_summary(summary):
+    summary = summary.replace("'",'"')
+    if summary.startswith('"') and summary.endswith('"') and '"' not in summary[1:-2]:
+        summary = summary[1:-2]
+    return summary
+
+# %% ../nbs/summarise.ipynb 32
 def parse_summary(llm_summary):
     split = llm_summary.split("###")
     if len(split) == 3:
         return {
-            'title': split[0].strip(),
-            'summary': split[2].strip(),
+            'title': format_summary(split[0].strip()),
+            'summary': format_summary(split[2].strip()),
             'summary_unparsed': llm_summary
         }
     else:
@@ -82,7 +89,7 @@ def parse_summary(llm_summary):
                 'summary_unparsed': llm_summary
             }
 
-# %% ../nbs/summarise.ipynb 32
+# %% ../nbs/summarise.ipynb 33
 def get_topic_summary_prompt(topic):
     speech_text = format_speech_text(topic)
     if topic['label'] == 0:
@@ -91,7 +98,7 @@ def get_topic_summary_prompt(topic):
         prompt = get_standard_prompt(speech_text)
     return prompt
 
-# %% ../nbs/summarise.ipynb 33
+# %% ../nbs/summarise.ipynb 34
 def summarise_topics(transcript, llm):
     for i, topic in enumerate(transcript):
         prompt = get_topic_summary_prompt(topic)
@@ -102,7 +109,7 @@ def summarise_topics(transcript, llm):
         torch.cuda.empty_cache()
     return transcript
 
-# %% ../nbs/summarise.ipynb 37
+# %% ../nbs/summarise.ipynb 38
 def get_whole_summary_prompt(summarised_topics):
     summaries = '\n\n'.join([topic['summary'] for topic in summarised_topics])
     prompt = f"""Written below are summaries of every topic of a podcast episode. Please write a detailed summary for the whole podcast episode.
@@ -114,7 +121,7 @@ def get_whole_summary_prompt(summarised_topics):
 """
     return prompt
 
-# %% ../nbs/summarise.ipynb 38
+# %% ../nbs/summarise.ipynb 39
 def summarise_transcript(transcript, llm):
     prompt = get_whole_summary_prompt(transcript)
     print(len(llm.tokenizer.tokenize(prompt)))
@@ -122,7 +129,7 @@ def summarise_transcript(transcript, llm):
     summary = llm(prompt)[0]['generated_text']
     return summary
 
-# %% ../nbs/summarise.ipynb 40
+# %% ../nbs/summarise.ipynb 41
 def summarise(transcript_split):
     llm = load_llm_pipeline(cache_dir="/home/steph/.cache/huggingface/os_models")
     summarised_topics = summarise_topics(transcript_split, llm)
@@ -131,10 +138,10 @@ def summarise(transcript_split):
         'summary': summarised_transcript, 'topics': summarised_topics
     }
 
-# %% ../nbs/summarise.ipynb 51
+# %% ../nbs/summarise.ipynb 52
 def get_num_tokens(text, tokenizer): return len(tokenizer.tokenize(text))
 
-# %% ../nbs/summarise.ipynb 55
+# %% ../nbs/summarise.ipynb 56
 def chunk_text(topic_text, chunk_size=4000):
     paragraphs = split_paragraphs_text(topic_text).split("\n\n")
     split_idxs = [0]
@@ -159,7 +166,7 @@ def chunk_text(topic_text, chunk_size=4000):
                 chunks.append('\n\n'.join(paragraphs[i:j]))
     return chunks 
 
-# %% ../nbs/summarise.ipynb 57
+# %% ../nbs/summarise.ipynb 58
 def get_chunk_summary_prompt(chunk_text):
     return f"""Write a concise summary of the following:
 
@@ -167,7 +174,7 @@ def get_chunk_summary_prompt(chunk_text):
 
 CONCISE SUMMARY: """
 
-# %% ../nbs/summarise.ipynb 58
+# %% ../nbs/summarise.ipynb 59
 def get_chain_title_prompt(topic_text):
     return f"""The following is a series of summaries of a text chapter. Generate a title from these summaries.
 
@@ -190,7 +197,7 @@ Now try below:
 
 """
 
-# %% ../nbs/summarise.ipynb 59
+# %% ../nbs/summarise.ipynb 60
 def get_topic_title_chain(text, pipe):
     text_chunks = chunk_text(text)
     chunk_summaries = []
@@ -200,7 +207,7 @@ def get_topic_title_chain(text, pipe):
     title = pipe(get_chain_title_prompt("\n\n".join(chunk_summaries)))[0]['generated_text']
     return title
 
-# %% ../nbs/summarise.ipynb 62
+# %% ../nbs/summarise.ipynb 63
 def title_topics(topics, model, tokenizer):
     pipe = pipeline(
         model=model, tokenizer=tokenizer,
