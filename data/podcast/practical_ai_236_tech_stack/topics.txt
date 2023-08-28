@@ -1,0 +1,18 @@
+1	00:07	Welcome to Practical AI
+2	00:43	Deep dive into LLMs
+3	02:25	Emerging LLM app stack
+4	04:35	Playgrounds
+5	08:07	App Hosting
+6	10:46	Stack orchestration
+7	15:50	Maintenance breakdown
+8	19:08	Sponsor: Changelog News
+9	20:43	Vector databases
+10	22:36	Embedding models
+11	24:27	Benchmarks and measurements
+12	26:59	Data & poor architecture
+13	29:42	LLM logging
+14	33:01	Middleware Caching
+15	37:32	Validation
+16	40:53	Key takeaways
+17	42:36	Closing thoughts
+18	44:23	Outro

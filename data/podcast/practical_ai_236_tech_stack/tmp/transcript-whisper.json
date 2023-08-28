@@ -1,0 +1,612 @@
+[
+  {
+    "text": " Oh.",
+    "start": 5.088,
+    "end": 5.341
+  },
+  {
+    "text": " Welcome to Practical AI. If you work in artificial intelligence, aspire to, or are curious how AI-related technologies are changing the world, this is the show for you. Thank you to our partners at Fastly for shipping all of our pods super fast to wherever you listen. Check them out at fastly.com. And to our friends at Fly, deploy your app servers and database close to your users. No ops required. Learn more at fly.io.",
+    "start": 6.758,
+    "end": 36.745
+  },
+  {
+    "text": " Bye!",
+    "start": 36.745,
+    "end": 37.994
+  },
+  {
+    "text": " Welcome to another Fully Connected episode of Practical AI. In these episodes, Chris and I keep you fully connected with everything that's happening in the AI community. We'll cover some of the latest news and we'll cover some learning resources that'll help you level up your machine learning game. I'm Daniel Whitenack. I'm the founder of Prediction Guard and I'm joined as always by my co-host, Chris Benson, who is a tech strategist at Lockheed Martin. How you doing, Chris?",
+    "start": 43.073,
+    "end": 72.875
+  },
+  {
+    "text": " very well today, Daniel. How are you? I'm doing great. I am uncharacteristically joining this episode from the lobby of Hampton Inn in Nashville, Tennessee. So if our listeners hear any background noise, they know what that is. You have a built-in audience right there.",
+    "start": 72.875,
+    "end": 91.673
+  },
+  {
+    "text": " built in audience. The people in this lobby are unexpectedly learning about AI today, which I'm happy to happy to do. Yeah, out here visiting a customer on site. And yeah, it's nice to sit back and take a break from that and talk about all the cool stuff going on.",
+    "start": 91.673,
+    "end": 111.637
+  },
+  {
+    "text": " Excellent. Well, I'll tell you what, you know, we have had so many questions and, uh, about kind of sorting out all the things that have happened the last few months and over the last year. Um, and we've done a couple of episodes where it was trying to kind of clear out like generative AI, what's in it, uh, what LLMs are, how they relate and stuff like that.",
+    "start": 111.755,
+    "end": 132.713
+  },
+  {
+    "text": " What do you think about taking a little bit of a deep dive into large language models and kind of all the things that make them up? Because there's a lot of lingo being hurled about these days. Yeah, yeah. I think maybe even outside of LLMs, there's this perception that the model, whether it be for image generation or video generation or language generation,",
+    "start": 132.713,
+    "end": 157.317
+  },
+  {
+    "text": " that the model is the application. So when you are creating value, the sort of model, whether that be, you know, llama two or stable diffusion XL or whatever, that somehow the model is",
+    "start": 157.317,
+    "end": 172.522
+  },
+  {
+    "text": " is the application, like it's providing the functionality that your users want. And that's basically a falsehood, I would say. And there's this whole ecosystem of tooling that's developing around this. And one of the things that I sent you recently, which I think does a good job at illustrating some of the various things that are part of this new ecosystem or this new generative AI app stack,",
+    "start": 172.522,
+    "end": 201.783
+  },
+  {
+    "text": " was created by Andreessen Horwitz. They created a figure that's like emerging LLM app stack. We'll link it in our show notes. I think it goes, though, maybe more generally than LLMs. But that provides maybe a nice framework to talk through some of these things. Now, of course, they're providing their own look at this stack.",
+    "start": 201.783,
+    "end": 224.395
+  },
+  {
+    "text": " especially because they're invested in many of the companies that they highlight on the stack. But I think regardless of that, they're trying to help people understand how some of these things fit together. Have you seen this picture? I have. And I appreciated it when you pointed it out a while back there. It definitely is an interesting I haven't seen anything quite like it in terms of putting it together. And some things they seem to dive into more than others in the chart. It will be interesting to see how we parse it going forward here.",
+    "start": 224.395,
+    "end": 253.91
+  },
+  {
+    "text": " Yeah, and maybe we could just take some of these categories and talk them through in terms of the terminology that's used and how they fit into the overall ecosystem. So we can take an easy example here, which is one of the things that they call out, which is playground. Now, I think this is probably the place where many people start their",
+    "start": 254.095,
+    "end": 282.277
+  },
+  {
+    "text": " generative AI journey, let's say. So they either go to, I think, within the playground category, there would be like chat GPT might might fit in that category where you're prompting a model, it's interactive, it's a UI, like you can put stuff in, you can put in a prompt and get an output.",
+    "start": 282.277,
+    "end": 300.822
+  },
+  {
+    "text": " Right now, chat GPT is maybe a little bit more than that because there's a chat thread and all of that. But there's other playgrounds as well. So you could think of spaces on Hugging Face that allow you to use stable diffusion or allow you to use other types of models. There's other proprietary kind of playgrounds that are either part of a product or",
+    "start": 300.822,
+    "end": 326.573
+  },
+  {
+    "text": " are their own products. So OpenAI has their own playground within their platform. You can log in and try out your prompts. There's nat.dev, which is a cool one that kind of allows you to compare one model to the other. There's other products, like I would say something like QuipDrop, which is a tool that lets you use stable diffusion. And you can just go there. You can try out prompts for free. You can pay up if you need to use it.",
+    "start": 326.573,
+    "end": 353.641
+  },
+  {
+    "text": " So there's a limit to that, but there's a lot of these playgrounds floating around and that's often where people start things.",
+    "start": 353.641,
+    "end": 361.083
+  },
+  {
+    "text": " It's funny, the playground itself as a category has a lot of subcategories, I think, to it. Because, you know, you've already kind of called out kind of the diversity of what you've, you know, in the cloud providers, for instance, all the big cloud providers have their own playground areas. Yeah. NVIDIA has a playground area. I think it's almost becoming a ubiquitous notion. And of course, all those playground areas for the commercial entities are focused on their products and services, definitely, but trying to",
+    "start": 361.336,
+    "end": 389.315
+  },
+  {
+    "text": " trying to bring some cool factor to it. It's almost like a demo or experimentation interface. If we define this playground category, it's usually, but not always, a browser-based playground or a browser-based interface where you can try to prompt a model and see what the output is like. I think that would generally be true.",
+    "start": 389.315,
+    "end": 413.716
+  },
+  {
+    "text": " Maybe there's some caveats to certain ones like mid journey, for example, is a discord bot, or there's still a discord bot that you could use. Maybe that fits into the playground. But generally, these are interactive and useful for experimentation, but not necessarily useful to like build an application.",
+    "start": 413.716,
+    "end": 435.805
+  },
+  {
+    "text": " Yeah, I agree. And another thing to note about it from a characteristic standpoint is not only is it really, it's not made for you to go build your own thing. It's made for you to try the kind of the stuff of whatever organization is doing, but they do do it. Uh, they provide the resources. So by being in a browser, you don't have to have a GPU on your laptop.",
+    "start": 435.805,
+    "end": 457.118
+  },
+  {
+    "text": " You don't have to have resources. Yeah. Yeah. You don't have to have all the things through various means. They set up all that for you on the backend, whether it be just calling a service or whether it be creating a temporary environment through virtualization. But it is a good way to either to test out a new product line or to, or to just get your toes wet a little bit. If you want to try some stuff out, maybe you've been listening to the Practical AI podcast for a little while and you want to, uh, a particular topic grabs you. That would be a good place to go.",
+    "start": 457.118,
+    "end": 486.481
+  },
+  {
+    "text": " Yeah, and I think within that same vein, you could transition to talk about this other category, which is not unique to the generative AI app stack, let's call it. But it's still part of the stack, which they have called out app hosting. So that's very generic, right? So in here would fit things like,",
+    "start": 486.734,
+    "end": 508.823
+  },
+  {
+    "text": " verse sell or i would say you know generally like the cloud providers right and the various ways that you can host things whether that be an amazon with ecs or app runner or whatever that is or in even your own infrastructure your own on prem infrastructure if you host things now there are.",
+    "start": 508.823,
+    "end": 527.386
+  },
+  {
+    "text": " I would say a number of hosting providers that are kind of cool and trendy and people that are building new AI apps, they seem to gravitate towards like, let's say, Vercel and a lot of front end developers that use Vercel, which I think it's an amazing platform. So cool. That hasn't traditionally been like a",
+    "start": 527.386,
+    "end": 549.222
+  },
+  {
+    "text": " data sciency hosting way of doing things. But it represents, I think, this new wave of application developers that are developing applications, integrating AI. And you see some of those now kind of coming into or being exposed in this kind of wider app stack.",
+    "start": 549.222,
+    "end": 569.202
+  },
+  {
+    "text": " which is a good thing because we've talked for a long time, even as we open this conversation up saying the model is not the app, you know, you have to wrap the model with some goodness to get the value out of it, to be productive with it. And so I personally like the fact that we're seeing the model hosting and the app hosting are starting to merge because I think that's more manageable over time. It's less being in its own special category and it's more about, okay,",
+    "start": 569.202,
+    "end": 596.776
+  },
+  {
+    "text": " every app in the future is going to have models in it. And so, you know, we're accommodating that notion. So I, I like seeing it go there. I've been waiting for that for a while.",
+    "start": 596.776,
+    "end": 604.724
+  },
+  {
+    "text": " Yeah. And to really clarify and define things, you could kind of think about like the playground that we talked about as an app that has been developed by these different people that illustrates some LLM functionality, but it's usually not the app that you're going to build. You're going to build another app that is exposed to your users that uses the functionality. And you'll need to host that either in ways that people have been hosting things for a long time or new interesting",
+    "start": 605.18,
+    "end": 633.833
+  },
+  {
+    "text": " patterns that are popping up like things that modal is doing or maybe things that front-end developers really like to use like for sell and and other things but there's still that app hosting side now where i think things get interesting is",
+    "start": 633.833,
+    "end": 649.223
+  },
+  {
+    "text": " You have the playground. You have the app hosting. But regardless of both of those, what happens under the hood? And this is, I think, where things get quite interesting and where there's a lot of differences in the emerging generative AI stack compared to the maybe more traditional non-AI stack. In the middle of the diagram,",
+    "start": 649.223,
+    "end": 672.545
+  },
+  {
+    "text": " that we're talking about this emerging LLM app stack diagram, which I think also is, again, more general, is this layer of orchestration. So I don't know about you, Chris, but I am old enough, I guess, you don't have to be that old, I don't think, to when someone says orchestration, I think of like Kubernetes or like container orchestration. Yeah.",
+    "start": 672.545,
+    "end": 698.161
+  },
+  {
+    "text": " Maybe that's my own bias coming from working in a few microservices-oriented startups and that sort of thing. But this is distinctly not the orchestration that's being called out here. In the generative AI app stack, there's a level of orchestration which, in some of my workshops, I've been kind of referring to as almost like a convenience layer. Think about when you're interacting with a model.",
+    "start": 698.161,
+    "end": 727.844
+  },
+  {
+    "text": " Let's give a really concrete example. Let's say I want to do question and answer with an LLM.",
+    "start": 727.844,
+    "end": 732.856
+  },
+  {
+    "text": " I need to somehow get a context for answering the question. I need to insert the question in that context into a prompt. And then I need to send that prompt to a model. I need to get the result back and maybe do some cleanup on it, like I have some stop tokens, or I want it to end at a certain punctuation mark, or whatever that is.",
+    "start": 733.143,
+    "end": 758.607
+  },
+  {
+    "text": " That's all convenience what i would consider sort of this convenience and what they're calling orchestration around the call to the model and so this orchestration layer i think has to do with prompt templates.",
+    "start": 758.607,
+    "end": 776.157
+  },
+  {
+    "text": " generating prompts, chains of prompts, agents, plugging in data sources like plugins. These are all things that kind of circle around your AI calls, but aren't the AI model.",
+    "start": 776.157,
+    "end": 793.268
+  },
+  {
+    "text": " Yeah. I mean, it's the software around it, you know, just to simplify a little bit. Yeah. And maybe tooling. Yeah. Orchestration tooling. Yeah. Yeah. It's the stuff you have to wrap the model with to make it usable in a productive sense. And from the moment that I saw that word, that was almost the very first thing that grabbed me, you know, those, you know, little psychological quirk where you kind of notice the thing that sticks out. Yeah. That's the thing that stuck out was they,",
+    "start": 793.268,
+    "end": 817.67
+  },
+  {
+    "text": " It's a big bucket that they're calling orchestration, which is a loaded word that can mean a lot of different things depending on what it is you're trying to do. And the examples that they list in that category are all somewhat diverse as well. I think that was the first point where I thought, well, it's a chart with the creator has a, has a bias there. What are some of the ways, I'm just curious when we think about this kind of orchestration, as they say, wrapping around and providing the convenience,",
+    "start": 817.67,
+    "end": 847.505
+  },
+  {
+    "text": " Any ways that you would break that up, like how you think about it, you mentioned convenience and stuff, but they go from something like Python as a programming language to lang chain to chat GPT, all three very distinct kinds of entities.",
+    "start": 847.505,
+    "end": 861.089
+  },
+  {
+    "text": " Yeah, I think that you're kind of seeing a number of things happen here. The first one that they call out is Python slash DIY. So you're seeing a lot of roll your own kind of convenience functionality built up around LLMs. But I do think",
+    "start": 861.325,
+    "end": 878.707
+  },
+  {
+    "text": " One of the big players here would be like LangChain and what they're doing, because if you look again at those kind of layers of what's available there, you have maybe categories that I would call out. If we just take LangChain as an example, categories that I would call out of this sort of orchestration functionality would be templating.",
+    "start": 878.707,
+    "end": 900.037
+  },
+  {
+    "text": " So this would be like prompt templates, for example, or templating in terms of chains. So manually setting up a chain of things that can be called in one call. There's also an automation component of it. Maybe this is a way that orchestration kind of",
+    "start": 900.037,
+    "end": 921.13
+  },
+  {
+    "text": " fits with the older way the orchestration term is used in like DevOps and other things where some of it could be automation related to with things like agents or something like that, where you have an agent that automates certain functionality. It's not the LLM itself, but it's really automations around calling the LLMs or the other generative AI models to generate a, an image or what have you.",
+    "start": 921.13,
+    "end": 949.987
+  },
+  {
+    "text": " They also kind of have some separate call outs, you know, for APIs and plugins. And then they have a, which we can hit in a moment. They kind of have a collection of the, the maintenance items, you know, the things to keep the lights on, if you will, logging and caching and, and things like that. How do you look at that breakdown the way they have it?",
+    "start": 950.493,
+    "end": 969.865
+  },
+  {
+    "text": " Yeah, so I think this is where they kind of have the orchestration piece in the middle there as connecting a couple different things. One of those would be what I would consider, I think, more on the data or resource side. And then one is more on the model side. So I think we could split it into those two major categories. So what are you orchestrating when you're orchestrating something with link chain or similar?",
+    "start": 970.068,
+    "end": 997.827
+  },
+  {
+    "text": " Well, you're orchestrating connections to resources. I'll use the term resources because it might not be data per se. It might be like you say, like an API or another platform like Zapier or Wolfram Alpha, something like that.",
+    "start": 997.827,
+    "end": 1016.575
+  },
+  {
+    "text": " The other side of that is the model side, both the model hosting and some really useful tooling around that. But let's start on the resource side. So as you mentioned, you might orchestrate things like one of the things that I found both really fun to do and useful is to orchestrate calls into like a Google search.",
+    "start": 1016.677,
+    "end": 1038.547
+  },
+  {
+    "text": " So if I want to pull in some context on the fly, then I might want to do a Google search. That's a call to an API. So that's a resource or a plug-in that might be conveniently integrated into your orchestration layer, either via something like LangChain or via your own DIY code.",
+    "start": 1038.547,
+    "end": 1060.231
+  },
+  {
+    "text": " Another side of this would be the actual data and the data pipelines, which are your own data or data that you've gathered or is relevant to your problem. So again, if we're thinking about this sort of set of resources that could be orchestrated into your app, maybe you have a set of documentation that you want to generate answers to questions out of.",
+    "start": 1060.653,
+    "end": 1085.29
+  },
+  {
+    "text": " Or maybe you have a bunch of images that you want to use to fine tune stable diffusion or something like that. Having data and integrating it into models isn't new. And so the things that are called out in this particular image, like data pipelines,",
+    "start": 1085.29,
+    "end": 1103.785
+  },
+  {
+    "text": " Those are also not new and are part of this app stack if you're integrating your own data. So things like Databricks, or Airflow, or Packaderm, or tools to parse data, so PDF parsers, or unstructured data parsers, or image parsers, or image resizing, or all of that sort of stuff still fits into the data pipelining piece.",
+    "start": 1103.785,
+    "end": 1129.25
+  },
+  {
+    "text": " And so you've either got your data coming from APIs, which might be a resource that you're orchestrating, or you've got your data coming from your data sources, which might be traditional data sources of any type from databases to unstructured data.",
+    "start": 1129.25,
+    "end": 1157.363
+  },
+  {
+    "text": " Advancements in computer vision have rendered CAPTCHAs obsolete, as new research shows AI bots are 15% more accurate than humans at picking which images have a bridge or a sign or a bicycle or whatever in them.",
+    "start": 1157.431,
+    "end": 1172.686
+  },
+  {
+    "text": " The researchers recruited 1,400 participants to test websites that used capture puzzles, which account for 120 of the world's 200 most popular websites. The bots' accuracy ranges from 85 to 100%, with the majority above 96%. Meanwhile, we mere mortals check in at a pathetic 50 to 85% accuracy, and we answer slower than the robots to add insult to injury.",
+    "start": 1172.686,
+    "end": 1198.42
+  },
+  {
+    "text": " I've surmised this for months now, as we've been unable to ward off spam account creations on changelog.com, no matter which shiny new CAPTCHA service we tried. There are other efforts in the works besides CAPTCHA in order to differentiate between robots and humans, but so far, the robots are winning.",
+    "start": 1198.91,
+    "end": 1217.253
+  },
+  {
+    "text": " You just heard one of our five top stories from Monday's Changelog News. Subscribe to the podcast to get all of the week's top stories and pop your email address in at changelog.com slash news to also receive our free companion email with even more developer news worth your attention. Once again, that's changelog.com slash news.",
+    "start": 1217.438,
+    "end": 1239.106
+  },
+  {
+    "text": " Well, Chris, part of the data piece or the resource piece that is kind of unique within this new generative AI app stack is the embedding and the vector database piece. And I have to say, I've just got to recommend that our listeners, if they haven't,",
+    "start": 1243.308,
+    "end": 1266.511
+  },
+  {
+    "text": " listen to our very recent episode about vector databases because that episode goes into way more depth in terms of what a vector database is and why people are using it but just for a quick recap part of what you might want to do with generative AI models is",
+    "start": 1266.511,
+    "end": 1286.575
+  },
+  {
+    "text": " find relevant data that's relevant to a user query and somehow orchestrate that into your LLM calls either for chat or question answering or maybe even into image generation or video generation.",
+    "start": 1286.575,
+    "end": 1301.577
+  },
+  {
+    "text": " In order to find relevant data, what people have found is that they would like to do a vector or an embedding search on their own data to find relevant data. And again, you can find out much more about that in our previous episode. But that's called out in this app stack as probably something unique that's developing, which is not just having data pipelines and databases, but having",
+    "start": 1301.577,
+    "end": 1328.172
+  },
+  {
+    "text": " data flow through an embedding model and into a vector database where you're performing semantic searches. I mean, at the end of the day, it's a database that's very, it works well for the kind of operation that we're doing here. Whereas some of the traditional things that we had been working on for years before, there's kind of a context shifting in terms of how you're handling data, what data is, how it's organized. So this makes a lot more sense.",
+    "start": 1328.172,
+    "end": 1355.341
+  },
+  {
+    "text": " Yeah, and I should call out here, too, part of the stack here, and I'm glad that they called it out in this way in the schematic that we're looking at, is the embedding model. So a lot of people are talking about these vector databases, but in order to store a vector in a vector database, there is a very relevant component to this stack, which is the actual model that you're using to create embeddings.",
+    "start": 1355.543,
+    "end": 1383.758
+  },
+  {
+    "text": " And not all are created equal. So think about if you are working on an image problem. You may use a pre-trained feature extractor type model from Hugging Face to extract vectors that your images. So put in an image and get a vector out.",
+    "start": 1383.758,
+    "end": 1403.755
+  },
+  {
+    "text": " But if you're working with both image and text, for example, maybe you're going to use something like Quip or one of those, a related model that's able to embed both images and text in a similar semantic space. But if you're only using text, there's a whole bunch of, of course, choices. And all of those don't perform equally for different types of",
+    "start": 1403.755,
+    "end": 1429.253
+  },
+  {
+    "text": " tasks as well. If you search on Hugging Face or just do a Google search for a Hugging Face embeddings leaderboard, there's actually a separate leaderboard. So Hugging Face has a leaderboard for open models and how those score in various metrics. They also have a leaderboard for embeddings. And you can click through the different tasks. Let's say you're doing retrieval tasks.",
+    "start": 1429.253,
+    "end": 1454.718
+  },
+  {
+    "text": " like we're talking about here from a vector database, you can see which embeddings perform the best according to a variety of benchmarks in retrieval or in summarization or other things. Do you use that a lot when you're putting models, uh, and storing them into vector databases and figuring out the embeddings? Do you tend to go and see what is going on? Cause right now there's so much happening in that space. Is that make for a good guidepost for you?",
+    "start": 1454.718,
+    "end": 1482.038
+  },
+  {
+    "text": " Yeah, yeah. And I think what is also useful is looking at those performance metrics, but also, at least on the Hugging Face leaderboard, and some other leaderboards. So if you search for if you're working with text, one of the major tools for creating these embeddings in a really useful way is called sentence transformers. And they have their own table where they have",
+    "start": 1482.241,
+    "end": 1507.233
+  },
+  {
+    "text": " measured and benchmark various embeddings that can be integrated in sentence transformers. That's useful, but it's also useful to look at the columns, whether you're looking in the Hugging Face leaderboard or the sentence transformers or wherever you're looking, at the size of the embedding and the speed of the embedding. Because it was called out when we had our vector database discussion, but only in passing. Let's say you want to embed 200,000 PDFs.",
+    "start": 1507.233,
+    "end": 1537.152
+  },
+  {
+    "text": " So I just ran across this use case with some of the work that we're doing, and it can take a really, really, really, really long time.",
+    "start": 1537.152,
+    "end": 1546.957
+  },
+  {
+    "text": " depending on how you implement it, to both parse and embed a significant number of PDFs. The same would be true for documents or other text or other types of data even. And so when you're looking at that, there's two implications here. One is, how fast am I able to generate these embeddings? Do I have to use a GPU or can I use a CPU?",
+    "start": 1547.227,
+    "end": 1570.615
+  },
+  {
+    "text": " because there's going to be a different speed on GPUs versus CPUs. And how big are the embeddings? This is another interesting piece, which is, if I have got embeddings that are 1,000 or more in dimension, that's going to take up a lot more room in my database and on disk.",
+    "start": 1570.615,
+    "end": 1590.258
+  },
+  {
+    "text": " than embeddings that are 256 or something like that. So there's also storage and moving around data implications to how you choose this embedding space. So there's a lot of, I think, practical things that maybe people skip over here when they're just doing a prototype with Lang chain and some vector database. It's easy. But then as soon as you try to put all your data in, it gets much harder.",
+    "start": 1590.258,
+    "end": 1619.165
+  },
+  {
+    "text": " you raised a question in my mind and I'm going to throw it out. You may or may not be familiar with what the answer would be, but when you're looking at vector databases and you're looking at all this, you know, the diversity and embedding possibilities here and the fact that that has kind of physical layer consequences, you know, in terms of storage and stuff like that, are we seeing that in vector or other database arenas where they're trying to accommodate this new approach to capturing data?",
+    "start": 1619.536,
+    "end": 1649.05
+  },
+  {
+    "text": " in terms of having embeddings, the way a vector, you know, with the rise of vector databases, it seems that there would be a whole lot of kind of vendor related research on how you do that. Because to your point a moment ago, you're talking about data at such a volume that poor architecture in terms of what's under the hood could have some pretty big consequences there.",
+    "start": 1649.05,
+    "end": 1670.785
+  },
+  {
+    "text": " Yeah i think that's definitely true and there was a point that was made in one of our last episodes that the vendors for these things are having different priorities that don't always align so some are optimizing for how much data how quickly you can get a large amount of data in.",
+    "start": 1671.055,
+    "end": 1690.715
+  },
+  {
+    "text": " But maybe they're not as optimized for the query speed. Some are optimizing for query speed, but it might be really slow to get data in. And so that's one piece of it. I think another piece of it is how large of an embedding do you need?",
+    "start": 1690.715,
+    "end": 1709.395
+  },
+  {
+    "text": " and how complicated is your retrieval problem, right? I would recommend that people do some testing around this because let's say you have 100,000 documents that are very, very similar one to another or 100,000 images that are very, very similar to one another and the retrieval problem is actually semantically very difficult. You might need a larger embedding and more kind of",
+    "start": 1709.395,
+    "end": 1737.07
+  },
+  {
+    "text": " power, even like optimization around the query, like re ranking and other things to get the data that you need. Whereas if you have, you know, 100,000 images, and they're all fairly different, well, maybe you don't need to go to some of those links. So yeah, I think that that's also part of this problem. And people are still feeling out the best practices around some of this, partially because it's",
+    "start": 1737.07,
+    "end": 1764.847
+  },
+  {
+    "text": " this kind of new part of the AI stack, and partially because things are constantly updating as well. So if you use this embedding today, there's a better one tomorrow. And vector databases are updating all the time. So it's also just a very dynamic time here.",
+    "start": 1764.847,
+    "end": 1781.452
+  },
+  {
+    "text": " As we look at the chart here and there's kind of the three that we referred to earlier that are, that are kind of together and those are LLM cache logging slash LLM ops and validation. First of all, could you kind of describe what's encompassed in each of those and also kind of why are they fit together? Why are we seeing those lumped in one category here? One super category.",
+    "start": 1781.806,
+    "end": 1805.498
+  },
+  {
+    "text": " Yeah, so if you think about what we've talked about so far, there's this new generative AI stack, whether you're doing images or language or whatever, there's an application side, which might just be the playground, or it might be your own application. There's a data and resources side, which is what we've talked about with integrating APIs and data sources.",
+    "start": 1805.65,
+    "end": 1827.655
+  },
+  {
+    "text": " And then there's like a third arm here, which is the model side. And all of those are kind of connected through the orchestration layer, the automation layer, the convenience layer, whatever you want to end up calling that.",
+    "start": 1827.655,
+    "end": 1839.62
+  },
+  {
+    "text": " So now we're kind of going to this third arm of the model side. And we can come back to it here in a second, but one side of this is just hosting the models and having an API around them, which we can come back to. But between the model and your orchestration layer, almost as maybe we could call it like model middleware,",
+    "start": 1839.873,
+    "end": 1862.671
+  },
+  {
+    "text": " I'll just go ahead and coin that. I just coined it on, maybe people are already referring to it that way and I didn't coin it, but model middleware sits kind of either wrapping around or in between your orchestration layer and your model hosting. And these are the things that you're referring to around caching, logging, validation. Probably the one that people are most familiar with",
+    "start": 1862.671,
+    "end": 1886.583
+  },
+  {
+    "text": " If they are familiar with one of these would be the logging layer, which is again something that is kind of a DevOps-y infrastructure term, but here we might think of very specific type of logging, like model.",
+    "start": 1886.583,
+    "end": 1904.133
+  },
+  {
+    "text": " logging, which might be more natively supported in things like weights and biases or clear ml, or these other kind of ml ops type of solutions where you're logging requests that are coming in prompts that are being provided response time, GPU usage, all the kind of model related things. And you want to put those into, you know, graphs and other things.",
+    "start": 1904.133,
+    "end": 1934.002
+  },
+  {
+    "text": " So there may be specific kinds of logging. So how quickly on average is my model responding? What is the latency between making a prompt or a request and getting a response? How much GPU usage is my model using? And do I need more replicas of that model? These sorts of things can be really helpful as you're putting things into production. So that's a first of these middleware layers.",
+    "start": 1934.002,
+    "end": 1963.398
+  },
+  {
+    "text": " So Chris, the other middleware layers, I would say, that have been called out, at least in what we're looking at, are validation and caching. So I'll talk about caching, and then we can talk about validation a little bit, which is close to my heart. But caching, let's say that, again, this already happens in a lot of different applications. So think about a general API application.",
+    "start": 1980.56,
+    "end": 2006.277
+  },
+  {
+    "text": " if someone makes a request for data in your database, and you retrieve that data, and then the next user asks for the same data in your database, the proper and smart thing to do would not be to do two retrievals, right, but to cache that data in the application layer in memory, so that you can respond very quickly and reduce the number of times that you're reaching out to your database and things like that.",
+    "start": 2006.277,
+    "end": 2032.417
+  },
+  {
+    "text": " I notice in this chart that some of the examples that they put for caching, such as Redis and SQLite and such are, are very typical and long-term players in the app dev world. Yep. So does that beg the question for, or at least for me begging the question that when you're caching, like you're really talking about for the input, here's an output, whether it goes to a model or not, is it, is it really just application data that you're caching at that point?",
+    "start": 2032.433,
+    "end": 2059.13
+  },
+  {
+    "text": " So it's caching in that sense, but I think there's maybe implications to it that go beyond normal caching. So running AI models is expensive most of the time because you have to run them on some type of specialized hardware. If I've got a model running on two A100s,",
+    "start": 2059.585,
+    "end": 2082.417
+  },
+  {
+    "text": " I would rather not have four replicas of that model. I would rather just have one if I can, because I don't want to pay for all those GPUs. So part of it is really related to cost and performance. So it's also for a large model. This is mainly for large models, I would say. You've got a lot of cost.",
+    "start": 2082.417,
+    "end": 2106.802
+  },
+  {
+    "text": " either because you're running that model on really specialized hardware, or because, like if I'm calling out to GPT-4, it's really expensive to do a lot of requests to GPT-4, right? So, in order to deal with that, if you have a prompt input, you can cache that prompt, and if users are asking the same question,",
+    "start": 2106.802,
+    "end": 2129.026
+  },
+  {
+    "text": " I would rather just send them back the same response from GPT-4 or my large llama 270 billion model or whatever it is. I'm going to respond to them the same way based on the same or a similar input.",
+    "start": 2129.026,
+    "end": 2144.399
+  },
+  {
+    "text": " The other implication to this, which in my mind, it sort of fits into caching, but maybe not in the traditional sense. So I normally think of caching as like, I'm going to cache things in memory or locally at the application layer. But if you're caching prompts and responses,",
+    "start": 2144.399,
+    "end": 2165.476
+  },
+  {
+    "text": " there is a real opportunity to leverage that data to build your own competitive moat with your specific generative AI application. So for example, you've got a user base. They're prompting all of these sorts of things. All of a sudden, if you're saving all of that data and the responses that you're giving,",
+    "start": 2165.476,
+    "end": 2189.472
+  },
+  {
+    "text": " you're essentially starting to form your own domain-specific data set that you could leverage in a very competitive way in two senses. One is, right now, if you're using a really expensive model to make those responses,",
+    "start": 2189.472,
+    "end": 2206.432
+  },
+  {
+    "text": " Maybe you start saving those responses from the really expensive model, and you can use that data to fine-tune a smaller model that might be more performant and cost-effective in the long term. So it's an operational kind of play. The other way is, if you're gathering that over time and you actually have the resources to",
+    "start": 2207.056,
+    "end": 2227.424
+  },
+  {
+    "text": " human label that or give your own human preferences on that or certain annotations on that. That now is your own kind of advantage in fine tuning either one of these generative models or your own internal model for the domain that you're working in. So it's caching, but that's almost like a feedback or data curation side of things as well.",
+    "start": 2227.66,
+    "end": 2254.677
+  },
+  {
+    "text": " So you mentioned earlier that validation was close to your heart.",
+    "start": 2255.048,
+    "end": 2259.976
+  },
+  {
+    "text": " Yeah, so as our users know, I think part of the tooling that I'm building with Prediction Guard would fit into this category. It would actually span, I think, more categories. It kind of spanned between validation and orchestration and model hosting. So there's kind of a little bit of overlap there. But this validation layer really has to do with the fact that generative AI models across the board, I think people would say,",
+    "start": 2260.043,
+    "end": 2287.921
+  },
+  {
+    "text": " There's a lot of concerns around reliability, privacy, security, compliance, what have you. And so there's a rising number of tools that are addressing some or all of those issues. So whether it be putting controls on the output of your LLM, again, think about this like a middleware layer.",
+    "start": 2288.258,
+    "end": 2308.576
+  },
+  {
+    "text": " my LLM produces something harmful as output, or my generative AI model generates an image that is not fit for my users, I want to somehow catch that and correct it if I can.",
+    "start": 2308.576,
+    "end": 2323.612
+  },
+  {
+    "text": " Or I want to put certain things into my model, but I want to make sure that I'm not putting in either private or sensitive data. Or I want to structure the output of my model in a certain way into certain structures or types, like JSON or integer or float. All of these sorts of things kind of",
+    "start": 2323.612,
+    "end": 2342.107
+  },
+  {
+    "text": " I personally would break this apart probably into maybe like validation type and structure and then like security related things, because there's a lot here. There's validation, which is like, is my output what I want it to be? There's security related things, which is",
+    "start": 2342.107,
+    "end": 2362.036
+  },
+  {
+    "text": " Am I OK with putting the current request into my model or sending the output back to my users? And then there's type and structuring things. So with images, is the image upscaled appropriately for my use case? Or with text,",
+    "start": 2362.036,
+    "end": 2379.586
+  },
+  {
+    "text": " If I'm putting in something and wanting JSON back, is it actually valid JSON? That's more of a structure type checking type of thing. So there's a lot in this category. And I think you're probably getting the fact that I'm thinking a lot about this. I can tell.",
+    "start": 2379.586,
+    "end": 2396.849
+  },
+  {
+    "text": " And there's a lot here. But yeah, other things fitting into this category would I think cool and called rebuff, which is doing kind of checking for prompt injections, for example, that's like part of that security side of things. There's things like",
+    "start": 2396.849,
+    "end": 2413.808
+  },
+  {
+    "text": " PredictionGuard and GuardRails guidance outlines now that do type and structure type of things. There is also, I would say, a layer of this which a lot of people are implementing in the kind of roll your own Python DIY way as well, which in PredictionGuard, we implement some of these. But also, people are implementing them in their own systems,",
+    "start": 2413.808,
+    "end": 2439.104
+  },
+  {
+    "text": " self-consistency sampling, like calling a model multiple times and either choosing between the output or merging the output in some interesting way, or things like that, this sort of consistency stuff. I think a lot of people are rolling their own, too.",
+    "start": 2439.104,
+    "end": 2455.81
+  },
+  {
+    "text": " What do you think, as we start winding up here, what do you think are some of the takeaways from this chart, you know, or what brings top of mind things that people, as they look at it, might benefit from? How would you see it in the large?",
+    "start": 2456.182,
+    "end": 2470.019
+  },
+  {
+    "text": " Yeah, it's a good question. I think one major takeaway, one thing to keep in mind is the model is only a small part of the whole app stack here in a similar way to like used to when a thing existed called data science. We would say training a model is only a very small part of the kind of end-to-end data science",
+    "start": 2470.205,
+    "end": 2494.977
+  },
+  {
+    "text": " lifecycle of a project. There's a lot of other things involved. And I think here, you can make a similar conclusion that the tendency is to think of the model as the application, but there's really a lot more involved. And our friends over at Layton Space would say this is really where AI engineering comes into play. This space of",
+    "start": 2494.977,
+    "end": 2517.218
+  },
+  {
+    "text": " AI engineering is seems to be developing into a real thing whether you call it that word or not it is part of what this is so that's one take away i think the other take away is maybe just kind of forming this mental model around these three spokes",
+    "start": 2517.218,
+    "end": 2537.688
+  },
+  {
+    "text": " of the stack. So you've got your app and app hosting, you've got your data and your resources, and you've got your model and your model middleware. And all that kind of middle hub would be some sort of orchestration that you're performing either in a DIY way or with things like link chain to connect all of those pieces together.",
+    "start": 2537.688,
+    "end": 2559.001
+  },
+  {
+    "text": " So you're probably hoarse by now because we've pulled so much information out of you. This was a really, really good dive. You know, it's one particular publisher's way of looking at it, but we've never really dived into all the components of the infrastructure of a stack.",
+    "start": 2559.322,
+    "end": 2577.007
+  },
+  {
+    "text": " with this kind of and and I think most people haven't had a chance to see it yet because So much of this has really arisen in recent months. Thanks for kind of Wearing half of a guest hat along the way here and taking us through this on on this fully connected episode",
+    "start": 2577.007,
+    "end": 2592.785
+  },
+  {
+    "text": " Yeah, and I think in terms of learning about these things, I think people can check out our show notes. We'll have a link to the diagram that we've been discussing here. I would say learning-wise, this helps you organize your thought process, but to really get an intuition around these things, you can look at various examples in this diagram and go to their docs and try out some of that. There's a variety of kind of end-to-end examples as well that",
+    "start": 2593.139,
+    "end": 2622.502
+  },
+  {
+    "text": " are pretty typical these days, like in language, if you're doing kind of a chat over your docs thing, that involves a model and a data layer and an application layer. So just building one of these example apps, I think, could give people the kind of learning and that sort of thing that they need. But yeah, it's been fun. It's always helpful to talk these things out loud with you, Chris. I find it very useful. Well, I learn a lot every time we do this. So thanks a lot, man.",
+    "start": 2622.502,
+    "end": 2650.919
+  },
+  {
+    "text": " Yeah. Yeah. Well, we'll see you next week. See you next week. Thank you for listening to Practical AI. Your next step is to subscribe now if you haven't already. And if you're a longtime listener of the show, help us reach more people by sharing Practical AI with your friends and colleagues.",
+    "start": 2651.071,
+    "end": 2676.316
+  },
+  {
+    "text": " Thanks once again to Fastly and Fly for partnering with us to bring you all ChangeLog podcasts. Check out what they're up to at fastly.com and fly.io. And to our beat-freaking residents, Breakmaster Cylinder, for continuously cranking out the best beats in the biz. That's all for now. We'll talk to you again next time.",
+    "start": 2676.451,
+    "end": 2693.95
+  }
+]

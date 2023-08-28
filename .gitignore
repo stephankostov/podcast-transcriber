@@ -3,4 +3,5 @@
 
 data/podcast/*
 data/youtube
-!data/podcast/lex_ai_stephen_wolfram_1
+!data/podcast/lex_ai_stephen_wolfram
+!data/podcast/practical_ai_236_tech_stack
