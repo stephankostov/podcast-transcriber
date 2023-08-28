@@ -3,8 +3,8 @@
 # %% auto 0
 __all__ = ['group_sentences', 'group_sentences_text', 'rev_sigmoid', 'activate_similarities', 'split_on_minimas',
            'get_abs_indexes', 'group_paragraphs', 'group_paragraphs_text', 'get_position_embeddings', 'get_embeddings',
-           'get_topic_splits', 'group_topics', 'sentences_to_words', 'group_speakers', 'get_group_type', 'label_groups',
-           'wrapped_partial', 'group_and_label', 'get_n_topics', 'group']
+           'get_n_topics', 'get_topic_splits', 'group_topics', 'sentences_to_words', 'group_speakers', 'get_group_type',
+           'label_groups', 'wrapped_partial', 'group_and_label', 'group']
 
 # %% ../nbs/group.ipynb 19
 import pandas as pd
@@ -121,10 +121,19 @@ def get_embeddings(sentences):
     position_embeddings = position_embeddings * (np.max(sentence_embeddings) / np.max(position_embeddings)) # scale to match sentence embeddings
     return sentence_embeddings + position_embeddings
 
-# %% ../nbs/group.ipynb 58
+# %% ../nbs/group.ipynb 59
 from sklearn.cluster import KMeans
 
-# %% ../nbs/group.ipynb 63
+# %% ../nbs/group.ipynb 64
+def get_n_topics(words, soft_max_n=20):
+    n_topics = math.ceil(len(words) / 1000)
+    if n_topics > max_n: 
+        n_topics = max_n
+        if len(words)/n_topics > 2500:
+            n_topics = math.ceil(len(words)/max_n)
+    return n_topics
+
+# %% ../nbs/group.ipynb 69
 # splitting topics into consecutive topics 
 def get_topic_splits(sentences_clustered):
     group_idxs = [0]
@@ -133,8 +142,9 @@ def get_topic_splits(sentences_clustered):
             group_idxs.append(i)
     return group_idxs
 
-# %% ../nbs/group.ipynb 65
-def group_topics(sentences, n_topics):
+# %% ../nbs/group.ipynb 71
+def group_topics(sentences, n_topics=None):
+    if not n_topics: n_topics = get_n_topics(sentences_to_words(sentences))
     sentences_text = [ ' '.join([ word['word'] for word in s ]) for s in sentences ]
     embeddings = get_embeddings(sentences_text)
     clusters = KMeans(n_clusters=n_topics).fit(embeddings)
@@ -143,12 +153,12 @@ def group_topics(sentences, n_topics):
     topics = [ sentences[i:j] for i, j in zip(group_idxs, group_idxs[1:]+[None]) ]
     return topics, group_idxs
 
-# %% ../nbs/group.ipynb 88
+# %% ../nbs/group.ipynb 103
 # flattening sentence array
 def sentences_to_words(sentences):
     return [word for sentence in sentences for word in sentence]
 
-# %% ../nbs/group.ipynb 89
+# %% ../nbs/group.ipynb 104
 # creating speech groups by consecutive speaker
 def group_speakers(sentences):
     # reformat sentences without minimum length to allow proper character splitting
@@ -160,12 +170,12 @@ def group_speakers(sentences):
     speaker_groups = [ sentences[i:j] for i, j in zip(group_idxs, group_idxs[1:]+[None]) ]
     return speaker_groups, group_idxs
 
-# %% ../nbs/group.ipynb 93
+# %% ../nbs/group.ipynb 108
 def get_group_type(group_function):
     lemmatizer = WordNetLemmatizer()
     return lemmatizer.lemmatize(group_function.__name__.split("_")[1])
 
-# %% ../nbs/group.ipynb 94
+# %% ../nbs/group.ipynb 109
 def label_groups(groups, group_type):
     word_label = True if group_type in groups[0][0][0] else False
     return [ {
@@ -178,14 +188,14 @@ def label_groups(groups, group_type):
         } for i, group in enumerate(groups)
     ]
 
-# %% ../nbs/group.ipynb 95
+# %% ../nbs/group.ipynb 110
 # warpper function to allow `function.__name__` attribute to be called for partial functions
 def wrapped_partial(func, *args, **kwargs):
     partial_func = partial(func, *args, **kwargs)
     update_wrapper(partial_func, func)
     return partial_func
 
-# %% ../nbs/group.ipynb 96
+# %% ../nbs/group.ipynb 111
 def group_and_label(sentences, split_functions):
     split_function = split_functions[0]
     groups, _ = split_function(sentences)
@@ -200,18 +210,14 @@ def group_and_label(sentences, split_functions):
             groups[i].pop('groups')
     return groups
 
-# %% ../nbs/group.ipynb 106
-def get_n_topics(words): return int(np.ceil(len(words)/2150))
-
-# %% ../nbs/group.ipynb 108
+# %% ../nbs/group.ipynb 112
 def group(words, n_topics=None, split_functions=None):
-    if not n_topics: n_topics = get_n_topics(words)
     sentences, _ = group_sentences(words) # functions standardised to take sentences as inputs, as this is what is required for topics & paragraphs
     split_functions = [wrapped_partial(group_topics, n_topics=n_topics), group_speakers, group_paragraphs] if not split_functions else split_functions
     transcript_split = group_and_label(sentences, split_functions)
     return transcript_split
 
-# %% ../nbs/group.ipynb 118
+# %% ../nbs/group.ipynb 122
 # creating speech groups by consecutive speaker
 def group_speakers(sentences):
     words = sentences_to_words(sentences)
