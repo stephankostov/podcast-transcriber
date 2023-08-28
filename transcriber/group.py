@@ -127,8 +127,8 @@ from sklearn.cluster import KMeans
 # %% ../nbs/group.ipynb 64
 def get_n_topics(words, soft_max_n=20):
     n_topics = math.ceil(len(words) / 1000)
-    if n_topics > max_n: 
-        n_topics = max_n
+    if n_topics > soft_max_n: 
+        n_topics = soft_max_n
         if len(words)/n_topics > 2500:
             n_topics = math.ceil(len(words)/max_n)
     return n_topics
