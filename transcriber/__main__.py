@@ -30,7 +30,7 @@ def main():
     p.add_argument('--type', type=str, default='podcast', choices=['podcast','youtube'], help='source type')
     p.add_argument('--n_speakers', type=int, required=False, help='number of speakers in episode (leave blank if at all unsure)')
     p.add_argument('--n_topics', type=int, required=False, help='number of topics in episode')
-    p.add_argument('--clean_tmp', type=bool, required=False, help='remove tmp output dir')
+    p.add_argument('--keep_tmp', type=bool, required=False, help='remove tmp output dir')
     p.add_argument('--path', type=str, default=str(Path(__file__).parents[1]/"data"), help='specify output filepath')
     args = p.parse_args()
 
@@ -55,7 +55,9 @@ def main():
     logging.info("STAGE: Creating HTML output")
     create_html(transcript_full, audio_mp3)
 
-    if args.clean_tmp: shutil.rmtree(Path(audio_wav).parent)
+    if not args.keep_tmp: 
+        logging.info("STAGE: Cleaning files")
+        shutil.rmtree(Path(audio_wav).parent)
 
     logging.info("DONE")
 
