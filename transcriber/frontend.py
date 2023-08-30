@@ -143,7 +143,7 @@ def create_transcript_div(transcript):
         transcript_div.append(topic_div)
     return transcript_div
 
-# %% ../nbs/frontend.ipynb 22
+# %% ../nbs/frontend.ipynb 18
 def write_output(doc, episode_file, asset_path):
     output_path = Path(episode_file).parent/'output'
     if output_path.exists(): shutil.rmtree(output_path)
