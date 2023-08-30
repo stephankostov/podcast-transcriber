@@ -1,2 +1,2 @@
-data/* linguist-detectable=false
-docs/* linguist-detectable=false
+data/* linguist-vendored
+docs/* linguist-vendored
