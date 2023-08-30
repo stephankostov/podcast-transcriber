@@ -3,7 +3,8 @@
 # %% auto 0
 __all__ = ['batch_size', 'compute_type', 'language', 'device', 'get_tmp_dir', 'whisper_transcribe', 'whisperx_align',
            'diarization_to_df', 'diarize', 'assign_speakers', 'add_missing_field', 'find_first_speaker',
-           'add_missing_segment_values', 'add_missing_word_values', 'process_transcript', 'transcribe']
+           'add_missing_segment_values', 'add_missing_word_values', 'order_speakers', 'process_transcript',
+           'transcribe']
 
 # %% ../nbs/transcribe.ipynb 1
 from whisperx import load_model, load_audio, load_align_model, align
@@ -104,14 +105,30 @@ def add_missing_word_values(words):
         w, prev_end = add_missing_field(w, 'end', prev_end)
     return words
 
-# %% ../nbs/transcribe.ipynb 25
-def process_transcript(transcript):
-    return {
-        'segments': add_missing_segment_values(transcript['segments']),
-        'words': add_missing_word_values(transcript['word_segments'])
-    }
+# %% ../nbs/transcribe.ipynb 29
+def order_speakers(transcript_words):
 
-# %% ../nbs/transcribe.ipynb 30
+    # cannot use set as we need to preserve the order of which they appear
+    unique_speakers = []
+    for speech in transcript_words:
+        if speech['speaker'] not in unique_speakers:
+            unique_speakers.append(speech['speaker'])
+    
+    rename_mapping = {speaker:'SPEAKER_0'+str(i) for i, speaker in enumerate(unique_speakers)}
+
+    for word in transcript_words:
+        word['speaker'] = rename_mapping[word['speaker']]
+
+    return transcript_words
+
+# %% ../nbs/transcribe.ipynb 31
+def process_transcript(transcript):
+    return order_speakers(
+        add_missing_word_values(
+            transcript['word_segments'])
+    )
+
+# %% ../nbs/transcribe.ipynb 36
 def transcribe(audio_file, n_speakers, device="cuda", save=True):
     transcript_whisper = whisper_transcribe(audio_file=audio_file, device=device)
     transcript_aligned = whisperx_align(transcript_whisper, audio_file, device=device)

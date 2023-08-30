@@ -44,7 +44,7 @@ def main():
     transcript = transcribe(audio_wav, args.n_speakers)
 
     logging.info("STAGE: Grouping transcript")
-    transcript_split = group(transcript['words'], args.n_topics)
+    transcript_split = group(transcript, args.n_topics)
     saveToJSON(transcript_split, 'transcript-grouped.json', audio_wav, True)
 
     logging.info("STAGE: Summarising transcript groups")
